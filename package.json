@@ -1,7 +1,10 @@
 {
-  "name": "@react-native-community/geolocation",
-  "version": "3.0.6",
+  "name": "@react-native-oh-library/geolocation",
+  "version": "3.1.0-0.0.1",
   "description": "React Native Geolocation Module for iOS and Android",
+   "harmony": {
+    "alias": "@react-native-community/geolocation"
+  },
   "react-native": "js/index",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -11,7 +14,11 @@
     "lib/",
     "js/",
     "/android",
+	"harmony",
     "!/android/build",
+	"!/harmony/oh_modules",
+	"!/harmony/**/build",
+	"!/harmony/**/oh_modules",
     "/ios",
     "/*.podspec"
   ],
@@ -33,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalchudziak/react-native-geolocation.git"
+	"url": "https://github.com/react-native-oh-library/clipboard.git"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -126,6 +133,9 @@
         }
       ]
     ]
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "codegenConfig": {
     "libraries": [
