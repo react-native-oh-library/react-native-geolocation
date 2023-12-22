@@ -43,7 +43,9 @@ export class RNCGeolocationTurboModule extends TurboModule {
     super(ctx);
     logger.debug(TAG, ",RNCGeolocationTurboModule constructor");
     this.mUiCtx = ctx.uiAbilityContext
+    let rnInstance = ctx.rnInstance
     this.mLocationManager = new LocationManager()
+    this.mLocationManager.setRnInstance(rnInstance)
   }
 
   setConfiguration(config: {
@@ -101,19 +103,16 @@ export class RNCGeolocationTurboModule extends TurboModule {
       'distanceInterval': 0,
       'maxAccuracy': 0,
     };
-    if (options) {
-      if (options.interval) {
-        requestInfo.timeInterval = options.interval / 1000
-      }
-      if (options.distanceFilter) {
-        requestInfo.distanceInterval = options.distanceInterval
-      } else {
-        requestInfo.distanceInterval = 100
-      }
-      if (options.enableHighAccuracy) {
-        requestInfo.maxAccuracy = 0
-      }
+
+    if (options.interval!=null) {
+      requestInfo.timeInterval = options.interval / 1000
     }
+    if (options.distanceFilter!=null) {
+      requestInfo.distanceInterval = options.distanceInterval
+    } else {
+      requestInfo.distanceInterval = 100
+    }
+
     this.mLocationManager.startObserving(requestInfo)
   }
 

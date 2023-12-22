@@ -34,12 +34,20 @@ const locationChangeListener = (location: geoLocationManager.Location) => {
   //todo 传递rn侧
 }
 
+let rnIns_global = null
 /**
  *
  *
  */
 
 export class LocationManager {
+
+  rnIns:any
+
+  setRnInstance(rnInstance){
+    this.rnIns = rnInstance
+    rnIns_global = this.rnIns
+  }
   /**
    *
    * @param options
@@ -135,9 +143,24 @@ export class LocationManager {
     logger.debug(TAG, ",startObserving enter");
     try {
       logger.debug(TAG, ",startObserving,on second");
-      geoLocationManager.on('locationChange', requestInfo, locationChangeListener);
+      geoLocationManager.on('locationChange', requestInfo, (location)=>{
+        let position = {
+          coords: {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            altitude: location.altitude,
+            accuracy: location.accuracy,
+            heading: location.direction,
+            speed: location.speed,
+          },
+          timeStamp: location.timeStamp,
+        }
+		logger.debug(TAG, `startObserving,emitDeviceEvent position:${position}`)
+        rnIns_global.emitDeviceEvent("geolocationDidChange",position)
+      });
     } catch (error) {
       let err: BusinessError = error as BusinessError;
+      rnIns_global.emitDeviceEvent("geolocationError",err)
       logger.error(TAG, `startObserving,startObserving errCode:${err.code},errMessage:${err.message}`);
     }
   }
