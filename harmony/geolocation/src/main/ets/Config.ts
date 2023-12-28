@@ -42,9 +42,9 @@ export type GeolocationConfiguration = {
 }
 
 export type GeolocationOptions = {
-  timeout?: number; //求位置 超时时间
-  maximumAge?: number; //缓存位置多久
-  enableHighAccuracy?: boolean; //gps or wifi
+  timeout?: number;
+  maximumAge?: number;
+  enableHighAccuracy?: boolean;
   distanceFilter?: number;
   useSignificantChanges?: boolean;
   interval?: number;
