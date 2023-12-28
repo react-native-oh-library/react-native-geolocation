@@ -82,7 +82,7 @@ export class RNCGeolocationTurboModule extends TurboModule {
     error: (error) => void
   ): void {
     logger.debug(TAG, `,call getCurrentPosition`);
-    if (this.mConfiguration.skipPermissionRequests) { //问题65rom 异常退出
+    if (this.mConfiguration?.skipPermissionRequests) { //问题65rom 异常退出
       //直接获取
       logger.debug(TAG, `,call getCurrentPosition flag100`)
       this.mLocationManager.getCurrentLocationData(options, success, error);

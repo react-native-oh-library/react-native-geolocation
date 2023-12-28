@@ -160,7 +160,9 @@ export class LocationManager {
       });
     } catch (error) {
       let err: BusinessError = error as BusinessError;
-      rnIns_global.emitDeviceEvent("geolocationError",err)
+	  if(err.code !== undefined){
+		rnIns_global.emitDeviceEvent("geolocationError",{code: err.code, message: err.message})
+	  }
       logger.error(TAG, `startObserving,startObserving errCode:${err.code},errMessage:${err.message}`);
     }
   }
