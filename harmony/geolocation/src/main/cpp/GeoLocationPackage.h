@@ -35,8 +35,8 @@ class GeoLocationTurboModuleFactoryDelegate : public TurboModuleFactoryDelegate 
 public:
     SharedTurboModule createTurboModule(Context ctx, const std::string &name) const override
     {
-        if(name == "RNCGeolocation") {
-          return std::make_shared<RNCGeolocationTurboModule>(ctx, name);
+        if (name == "RNCGeolocation") {
+        return std::make_shared<RNCGeolocationTurboModule>(ctx, name);
         }
         return nullptr;
     };
@@ -52,4 +52,4 @@ public:
     }
 };
 } // namespace rnoh
-#endif 
+#endif

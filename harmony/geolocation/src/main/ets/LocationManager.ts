@@ -31,14 +31,9 @@ const TAG: string = "LocationManager"
 
 const locationChangeListener = (location: geoLocationManager.Location) => {
   logger.debug(TAG, `locationChangeListener: data:${JSON.stringify(location)}`);
-  //todo 传递rn侧
 }
 
 let rnIns_global = null
-/**
- *
- *
- */
 
 export class LocationManager {
 
@@ -49,7 +44,6 @@ export class LocationManager {
     rnIns_global = this.rnIns
   }
   /**
-   *
    * @param options
    * @param success
    * @param error
@@ -62,32 +56,8 @@ export class LocationManager {
         logger.error(TAG, "getCurrentLocationData,locationChanger: err=" + JSON.stringify(err));
         error(err)
       }
-      //latitude number 是 否 表示纬度信息，正值表示北纬,负值表示南纬。取值范围为-90到90.
-      //longitude number 是 否 表示经度信息，正值表示东经,负值表示西经。取值范围为-180到180.
-      //altitude number 是 否 表示高度信息，单位米。
-      //accuracy number 是 否 表示精度信息，单位米。
-      //speed number 是 否 表示速度信息，单位米每秒。
-      //timeStamp number 是 否 表示位置时间戳，UTC格式。
-      //direction number 是 否 表示航向信息，单位是“度”，取值范围为0到360。
-      //timeSinceBoot number 是 否 表示位置时间戳，开机时间格式。
-      //additions Array<string> 是 否 附加信息。
-      //additionSize number 是 否 附加信息数量，取值范围为大于等于0。
-      //isFromMock Boolean 是 否 表示位置信息是否来自于位置模拟功能，== 系统API：此接口为系统接口。
       if (location) {
         logger.debug(TAG, "getCurrentLocationData,locationChanger,location=" + JSON.stringify(location));
-        //todo: 转换obj
-        // position: {
-        //   coords: {
-        //     latitude: number;
-        //     longitude: number;
-        //     altitude: number | null;
-        //     accuracy: number;
-        //     altitudeAccuracy: number | null
-        //     heading: number | null; // 朝向
-        //     speed: number | null;
-        //   };
-        //   timestamp: number;
-        // }
         let position = {
           coords: {
             latitude: location.latitude,
@@ -104,10 +74,6 @@ export class LocationManager {
       }
     };
 
-    //export type GeolocationOptions = {
-    //  timeout?: number; //求位置 超时时间
-    //  maximumAge?: number; //缓存位置多久 单位 ms
-    //  enableHighAccuracy?: boolean; //gps or wifi
     let requestInfo: geoLocationManager.CurrentLocationRequest = {
       'priority': geoLocationManager.LocationRequestPriority.FIRST_FIX,
       'scenario': geoLocationManager.LocationRequestScenario.UNSET,
@@ -122,7 +88,6 @@ export class LocationManager {
       }
     }
 
-    // 重用上一个loc
     if (options.maximumAge) {
       let lastLoc: geoLocationManager.Location = geoLocationManager.getLastLocation() // 上一次位置
       let now = new Date().getTime()
@@ -134,7 +99,6 @@ export class LocationManager {
         return;
       }
     }
-    //获取当前loc
     logger.debug(TAG, ",getCurrentLocation,before call geoLocationManager.getCurrentLocation");
     geoLocationManager.getCurrentLocation(requestInfo, locationChange)
   }

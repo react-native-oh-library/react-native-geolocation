@@ -26,7 +26,6 @@ import { TurboModule, TurboModuleContext } from 'rnoh/ts';
 import geoLocationManager from '@ohos.geoLocationManager';
 import bundleManager from '@ohos.bundle.bundleManager';
 import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
-// import { PermissionRequestResult } from '@ohos.abilityAccessCtrl';
 import { BusinessError } from '@ohos.base';
 import { Config, GeolocationOptions } from './Config';
 import { LocationManager } from './LocationManager';
@@ -82,8 +81,7 @@ export class RNCGeolocationTurboModule extends TurboModule {
     error: (error) => void
   ): void {
     logger.debug(TAG, `,call getCurrentPosition`);
-    if (this.mConfiguration?.skipPermissionRequests) { //问题65rom 异常退出
-      //直接获取
+    if (this.mConfiguration?.skipPermissionRequests) {
       logger.debug(TAG, `,call getCurrentPosition flag100`)
       this.mLocationManager.getCurrentLocationData(options, success, error);
       return;
@@ -132,7 +130,6 @@ export class RNCGeolocationTurboModule extends TurboModule {
   async checkAccessToken(permission: Permissions): Promise<abilityAccessCtrl.GrantStatus> {
     let atManager: abilityAccessCtrl.AtManager = abilityAccessCtrl.createAtManager();
     let grantStatus: abilityAccessCtrl.GrantStatus = abilityAccessCtrl.GrantStatus.PERMISSION_DENIED;
-    //获取应用程序的accessTokenID
     let tokenId: number = 0;
     try {
       let bundleInfo: bundleManager.BundleInfo = await bundleManager.getBundleInfoForSelf(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
@@ -142,7 +139,6 @@ export class RNCGeolocationTurboModule extends TurboModule {
       let err: BusinessError = error as BusinessError;
       logger.error(TAG, `checkAccessToken,Failed to get bundle info for self. Code is ${err.code}, message is ${err.message}`);
     }
-    // 校验应用是否被授予权限
     try {
       grantStatus = await atManager.checkAccessToken(tokenId, permission);
     } catch (error) {
@@ -184,7 +180,6 @@ export class RNCGeolocationTurboModule extends TurboModule {
         }
       }
       if (grantedCount == permissions.length) {
-        // 授权成功
         logger.debug(TAG, `,reqPermissionsFromUser,granted ok100`);
         onGrantedSuccess()
       } else {
