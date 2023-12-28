@@ -155,7 +155,7 @@ export class LocationManager {
           },
           timeStamp: location.timeStamp,
         }
-		logger.debug(TAG, `startObserving,emitDeviceEvent position:${position}`)
+	logger.debug(TAG, `startObserving,emitDeviceEvent position:${position}`)
         rnIns_global.emitDeviceEvent("geolocationDidChange",position)
       });
     } catch (error) {
