@@ -7,14 +7,14 @@
  * @format
  */
 
-import * as GeolocationModule from './implementation';
+import * as GeolocationModule from '@react-native-community/geolocation/js/implementation'; 
 
 import type {
   GeolocationOptions,
   GeolocationConfiguration,
   GeolocationResponse,
   GeolocationError,
-} from './NativeRNCGeolocation';
+} from '@react-native-community/geolocation/js/NativeRNCGeolocation';
 
 const Geolocation = {
   /**

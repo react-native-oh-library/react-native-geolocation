@@ -1,6 +1,13 @@
 {
-  "name": "@react-native-community/geolocation",
-  "version": "3.0.6",
+  "name": "@react-native-oh-tpl/react-native-geolocation",
+  "version": "3.1.0-0.0.1",
+  "harmony": {
+    "alias": "@react-native-community/geolocation"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
+  },
   "description": "React Native Geolocation Module for iOS and Android",
   "react-native": "js/index",
   "main": "lib/commonjs/index",
@@ -13,7 +20,8 @@
     "/android",
     "!/android/build",
     "/ios",
-    "/*.podspec"
+    "/*.podspec",
+    "harmony"
   ],
   "author": "React Native Community",
   "contributors": [
@@ -46,6 +54,9 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "dependencies": {
+    "@react-native-community/geolocation": "3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
