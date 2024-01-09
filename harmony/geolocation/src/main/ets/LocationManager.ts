@@ -31,6 +31,19 @@ const TAG: string = "LocationManager"
 
 const locationChangeListener = (location: geoLocationManager.Location) => {
   logger.debug(TAG, `locationChangeListener: data:${JSON.stringify(location)}`);
+  let position = {
+    coords: {
+      latitude: location.latitude,
+      longitude: location.longitude,
+      altitude: location.altitude,
+      accuracy: location.accuracy,
+      heading: location.direction,
+      speed: location.speed,
+    },
+    timeStamp: location.timeStamp,
+  };
+  logger.debug(TAG, `startObserving,emitDeviceEvent position:${position}`);
+  rnIns_global.emitDeviceEvent("geolocationDidChange",position);
 }
 
 let rnIns_global = null
@@ -100,32 +113,24 @@ export class LocationManager {
       }
     }
     logger.debug(TAG, ",getCurrentLocation,before call geoLocationManager.getCurrentLocation");
-    geoLocationManager.getCurrentLocation(requestInfo, locationChange)
+
+    try {
+      geoLocationManager.getCurrentLocation(requestInfo, locationChange)
+    } catch(e) {
+      let err: BusinessError = e as BusinessError;
+      error({errCode: err.code, errMessage:err.message});
+    }
   }
 
   startObserving(requestInfo): void {
     logger.debug(TAG, ",startObserving enter");
     try {
       logger.debug(TAG, ",startObserving,on second");
-      geoLocationManager.on('locationChange', requestInfo, (location)=>{
-        let position = {
-          coords: {
-            latitude: location.latitude,
-            longitude: location.longitude,
-            altitude: location.altitude,
-            accuracy: location.accuracy,
-            heading: location.direction,
-            speed: location.speed,
-          },
-          timeStamp: location.timeStamp,
-        }
-	logger.debug(TAG, `startObserving,emitDeviceEvent position:${position}`)
-        rnIns_global.emitDeviceEvent("geolocationDidChange",position)
-      });
+      geoLocationManager.on('locationChange', requestInfo, locationChangeListener);
     } catch (error) {
       let err: BusinessError = error as BusinessError;
 	  if(err.code !== undefined){
-		rnIns_global.emitDeviceEvent("geolocationError",{code: err.code, message: err.message})
+		rnIns_global.emitDeviceEvent("geolocationError",{code: err.code, message: err.message});
 	  }
       logger.error(TAG, `startObserving,startObserving errCode:${err.code},errMessage:${err.message}`);
     }
