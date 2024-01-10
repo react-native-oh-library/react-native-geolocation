@@ -106,7 +106,7 @@ export class RNCGeolocationTurboModule extends TurboModule {
       requestInfo.timeInterval = options.interval / 1000
     }
     if (options.distanceFilter!=null) {
-      requestInfo.distanceInterval = options.distanceInterval
+      requestInfo.distanceInterval = options.distanceFilter
     } else {
       requestInfo.distanceInterval = 100
     }
