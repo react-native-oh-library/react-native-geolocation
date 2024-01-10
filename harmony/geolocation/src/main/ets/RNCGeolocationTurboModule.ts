@@ -95,8 +95,8 @@ export class RNCGeolocationTurboModule extends TurboModule {
   startObserving(options): void {
     logger.debug(TAG, `,call startObserving`);
     let requestInfo: geoLocationManager.LocationRequest = {
-      'priority': geoLocationManager.LocationRequestPriority.FIRST_FIX,
-      'scenario': geoLocationManager.LocationRequestScenario.UNSET,
+      'priority': 0x203,
+      'scenario': 0x300,
       'timeInterval': 1,
       'distanceInterval': 0,
       'maxAccuracy': 0,
@@ -186,6 +186,7 @@ export class RNCGeolocationTurboModule extends TurboModule {
         onGrantedFailed({ message: "部分权限未获授权" });
       }
     }).catch((err: BusinessError) => {
+      onGrantedFailed({code: err.code, message: err.message})
       logger.error(TAG, `,reqPermissionsFromUser,Failed to request permissions from user. Code is ${err.code}, message is ${err.message}`);
     })
   }

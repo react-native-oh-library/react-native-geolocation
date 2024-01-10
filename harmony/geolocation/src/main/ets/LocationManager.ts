@@ -88,8 +88,8 @@ export class LocationManager {
     };
 
     let requestInfo: geoLocationManager.CurrentLocationRequest = {
-      'priority': geoLocationManager.LocationRequestPriority.FIRST_FIX,
-      'scenario': geoLocationManager.LocationRequestScenario.UNSET,
+      'priority': 0x203,
+      'scenario': 0x300,
       'maxAccuracy': 0,
       'timeoutMs': 2000 };
     if (options) {
@@ -129,9 +129,7 @@ export class LocationManager {
       geoLocationManager.on('locationChange', requestInfo, locationChangeListener);
     } catch (error) {
       let err: BusinessError = error as BusinessError;
-	  if(err.code !== undefined){
-		rnIns_global.emitDeviceEvent("geolocationError",{code: err.code, message: err.message});
-	  }
+      rnIns_global.emitDeviceEvent("geolocationError",{code: err.code, message: err.message});
       logger.error(TAG, `startObserving,startObserving errCode:${err.code},errMessage:${err.message}`);
     }
   }
