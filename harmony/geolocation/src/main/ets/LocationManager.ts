@@ -13,7 +13,7 @@
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANT KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -28,6 +28,12 @@ import logger from './Logger';
 import systemDateTime from '@ohos.systemDateTime';
 
 const TAG: string = "LocationManager"
+
+let rnIns_global = null
+
+let cacheTime: number = 0
+
+let cachePosition = null
 
 const locationChangeListener = (location: geoLocationManager.Location) => {
   logger.debug(TAG, `locationChangeListener: data:${JSON.stringify(location)}`);
@@ -45,8 +51,6 @@ const locationChangeListener = (location: geoLocationManager.Location) => {
   logger.debug(TAG, `startObserving,emitDeviceEvent position:${position}`);
   rnIns_global.emitDeviceEvent("geolocationDidChange",position);
 }
-
-let rnIns_global = null
 
 export class LocationManager {
 
@@ -82,6 +86,8 @@ export class LocationManager {
           },
           timeStamp: location.timeStamp,
         }
+        cachePosition = position
+        cacheTime = new Date().getTime() + options.maximumAge
         logger.debug(TAG, `getCurrentLocationData,locationChanger,before call success,position=${JSON.stringify(position)}`);
         success(position)
       }
@@ -101,25 +107,46 @@ export class LocationManager {
       }
     }
 
-    if (options.maximumAge) {
-      let lastLoc: geoLocationManager.Location = geoLocationManager.getLastLocation() // 上一次位置
-      let now = new Date().getTime()
-      logger.debug(TAG, `,getCurrentLocation,now:${now}`);
-      logger.debug(TAG, `,getCurrentLocation,lastLoc.timeStamp:${lastLoc.timeStamp}`);
-      if ((now - lastLoc.timeStamp) <= options.maximumAge) {
-        logger.debug(TAG, ",getCurrentLocation,return lastLoc");
-        locationChange(undefined, lastLoc);
-        return;
+    if(cachePosition == null || options.maximumAge == 0) {
+      try {
+          geoLocationManager.getCurrentLocation(requestInfo, locationChange)
+      } catch(e) {
+        let err: BusinessError = e as BusinessError;
+        error({errCode: err.code, errMessage:err.message});
+      }
+    }else {
+      if(options.maximumAge == 'Infinity') {
+        success(cachePosition)
+      }else{
+        if(new Date().getTime() <= cacheTime) {
+          success(cachePosition)
+          return
+        }else {
+          cachePosition = null
+          cacheTime = 0
+        }
       }
     }
-    logger.debug(TAG, ",getCurrentLocation,before call geoLocationManager.getCurrentLocation");
+    
+    // if (options.maximumAge) {
+    //   let lastLoc: geoLocationManager.Location = geoLocationManager.getLastLocation() // 上一次位置
+    //   let now = new Date().getTime()
+    //   logger.debug(TAG, `,getCurrentLocation,now:${now}`);
+    //   logger.debug(TAG, `,getCurrentLocation,lastLoc.timeStamp:${lastLoc.timeStamp}`);
+    //   if ((now - lastLoc.timeStamp) <= options.maximumAge) {
+    //     logger.debug(TAG, ",getCurrentLocation,return lastLoc");
+    //     locationChange(undefined, lastLoc);
+    //     return;
+    //   }
+    // }
+    // logger.debug(TAG, ",getCurrentLocation,before call geoLocationManager.getCurrentLocation");
 
-    try {
-      geoLocationManager.getCurrentLocation(requestInfo, locationChange)
-    } catch(e) {
-      let err: BusinessError = e as BusinessError;
-      error({errCode: err.code, errMessage:err.message});
-    }
+    // try {
+    //   geoLocationManager.getCurrentLocation(requestInfo, locationChange)
+    // } catch(e) {
+    //   let err: BusinessError = e as BusinessError;
+    //   error({errCode: err.code, errMessage:err.message});
+    // }
   }
 
   startObserving(requestInfo): void {
