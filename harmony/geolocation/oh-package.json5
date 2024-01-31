@@ -1,12 +1,12 @@
 {
   "license": "ISC",
   "types": "",
-  "devDependencies": {
-    "rnoh": "file:../rnoh"
-  },
+  "devDependencies": {},
   "name": "geolocation",
   "description": "",
   "main": "index.ets",
-  "version": "0.0.1",
-  "dependencies": {}
+  "version": "3.1.0-0.0.3",
+  "dependencies": {
+    "rnoh": "file:../rnoh"
+  }
 }
