@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import { TurboModule, TurboModuleContext } from 'rnoh/ts';
+import { TurboModule, TurboModuleContext } from '@rnoh/react-native-openharmony/ts';
 import geoLocationManager from '@ohos.geoLocationManager';
 import bundleManager from '@ohos.bundle.bundleManager';
 import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
