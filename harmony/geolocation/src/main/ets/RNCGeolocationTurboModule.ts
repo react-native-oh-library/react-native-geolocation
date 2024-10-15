@@ -108,7 +108,7 @@ export class RNCGeolocationTurboModule extends TurboModule {
     if (options.distanceFilter!=null) {
       requestInfo.distanceInterval = options.distanceFilter
     } else {
-      requestInfo.distanceInterval = 100
+      requestInfo.distanceInterval = 0
     }
 
     this.mLocationManager.startObserving(requestInfo)
