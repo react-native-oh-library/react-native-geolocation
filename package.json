@@ -1,6 +1,6 @@
 {
   "name": "@react-native-oh-tpl/geolocation",
-  "version": "3.1.0-0.0.6",
+  "version": "3.1.0-0.0.7",
   "harmony": {
     "alias": "@react-native-community/geolocation"
   },

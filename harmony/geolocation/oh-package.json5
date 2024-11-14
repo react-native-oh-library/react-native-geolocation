@@ -5,7 +5,7 @@
   "name": "@react-native-oh-tpl/geolocation",
   "description": "",
   "main": "index.ets",
-  "version": "3.1.0-0.0.6",
+  "version": "3.1.0-0.0.7",
   "dependencies": {
     "@rnoh/react-native-openharmony": "file:../react_native_openharmony"
   }
