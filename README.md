@@ -1,13 +1,13 @@
-# @react-native-oh-tpl/react-native-geolocation
+#  迁移声明
 
-This project is based on [@react-native-community/geolocation](https://github.com/michalchudziak/react-native-geolocation)
+- 本仓库已迁移至 GitCode：[OpenHarmony-SIG/rntpc_react-native-geolocation](https://gitcode.com/openharmony-sig/rntpc_react-native-geolocation)。
+- 包名已更改为 `@react-native-oh-ohos/geolocation`，支持直接从 npm 下载。
+- 更多详情请查阅新仓库的 README 文件。
+- 本仓库旧版本的文档已归档：[链接](/doc/zh-cn.md)
 
-## Documentation
+# Migration Announcement
 
-- [中文](https://gitee.com/react-native-oh-library/usage-docs/blob/master/zh-cn/react-native-community-geolocation.md)
-
-- [English](https://gitee.com/react-native-oh-library/usage-docs/blob/master/en/react-native-community-geolocation.md)
-
-## License
-
-This library is licensed under [The MIT License (MIT)](https://github.com/michalchudziak/react-native-geolocation/blob/master/LICENSE)
+- This repository has been migrated to GitCode：[OpenHarmony-SIG/rntpc_react-native-geolocation](https://gitcode.com/openharmony-sig/rntpc_react-native-geolocation)       
+- The package name has been changed to `@react-native-oh-ohos/geolocation` and is now available for direct download from npm.
+- For more details, please refer to the README in the new repository.
+- Archived documentation for versions in this repository can be found here: [Link](/doc/en.md)
